@@ -24,8 +24,17 @@ public class MainActivity extends AppCompatActivity {
         String savedName = prefs.getString("name", "empty");
         TextView dogNameSaved = (TextView)findViewById(R.id.dogNameSaved);
         dogNameSaved.setText(savedName);
+
+
+
 // globally
     }
+
+    public void openNew(View view) {
+        Intent intent2 = new Intent(this, Main2Activity.class);
+        startActivity(intent2);
+    }
+
     public void sendMessage(View view) {
         Intent intent = new Intent(this, SetName.class);
         // get the name and append to the intent

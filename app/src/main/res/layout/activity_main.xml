@@ -55,7 +55,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
          />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open new"
+        android:id="@+id/openNew"
+        android:onClick="openNew"
+        android:layout_below="@+id/sendName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
