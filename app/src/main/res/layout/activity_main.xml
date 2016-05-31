@@ -8,53 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.mydogs.MainActivity">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Insert the name of your dog"
-        android:id="@+id/Name"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
-    <EditText android:id="@+id/inputName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Insert the age"
-        android:id="@+id/age"
-        android:layout_below="@+id/inputName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/insertAge"
-        android:layout_below="@+id/age"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send"
-        android:id="@+id/sendName"
-        android:onClick="sendMessage"
-        android:layout_below="@+id/insertAge"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-         />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +18,7 @@
         android:layout_below="@+id/sendName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:visibility="invisible"
         />
     <TextView
         android:layout_width="wrap_content"

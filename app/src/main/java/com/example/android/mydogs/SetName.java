@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class SetName extends AppCompatActivity {
-
+    public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    public final static String EXTRA_MESSAGE2 = "com.mycompany.myfirstapp.MESSAGE2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_name);
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-        String messageAge = intent.getStringExtra(MainActivity.EXTRA_MESSAGE2);
+        String message = intent.getStringExtra(SetName.EXTRA_MESSAGE);
+        String messageAge = intent.getStringExtra(SetName.EXTRA_MESSAGE2);
         float age = Float.parseFloat(messageAge);
         Dog myDog=new Dog(message, age);
 
@@ -26,7 +27,7 @@ public class SetName extends AppCompatActivity {
         dogAge.setText(String.valueOf(myDog.getAge()));
 
         SharedPreferences prefs = this.getSharedPreferences(
-                "com.example.app", Context.MODE_PRIVATE);
+                "com.example.MyDogs", Context.MODE_PRIVATE);
 
        // SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
