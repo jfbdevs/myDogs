@@ -32,7 +32,7 @@ public class SetName extends AppCompatActivity {
        // SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("name", myDog.getName());
-        editor.commit();
+        editor.apply();
 
 
         //int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
