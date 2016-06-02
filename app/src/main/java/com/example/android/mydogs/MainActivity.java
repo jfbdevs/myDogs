@@ -7,10 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.FileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         Button openNew = (Button)findViewById(R.id.openNew);
 
         if(savedName.equals("empty")){
+            assert openNew != null;
             openNew.setVisibility(View.VISIBLE);
 
         }

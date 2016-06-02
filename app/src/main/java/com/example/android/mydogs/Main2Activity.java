@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Main2Activity extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
-    public final static String EXTRA_MESSAGE2 = "com.mycompany.myfirstapp.MESSAGE2";
+    private final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    private final static String EXTRA_MESSAGE2 = "com.mycompany.myfirstapp.MESSAGE2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,7 @@ public class Main2Activity extends AppCompatActivity {
                 "com.example.app", Context.MODE_PRIVATE);
         String savedName = prefs.getString("name", "empty");
         TextView dogNameSaved = (TextView)findViewById(R.id.dogNameSaved);
+        assert dogNameSaved != null;
         dogNameSaved.setText(savedName);
     }
 
@@ -28,11 +29,11 @@ public class Main2Activity extends AppCompatActivity {
         Intent intent = new Intent(this, SetName.class);
         // get the name and append to the intent
         EditText editText = (EditText) findViewById(R.id.inputName);
-        String message = editText.getText().toString();
+        String message = editText != null ? editText.getText().toString() : null;
         intent.putExtra(EXTRA_MESSAGE, message);
         // get the age and append to the intent
         EditText editText2 = (EditText) findViewById(R.id.insertAge);
-        String messageAge = editText2.getText().toString();
+        String messageAge = (editText2 != null) ? editText2.getText().toString() : null;
         intent.putExtra(EXTRA_MESSAGE2, messageAge);
         startActivity(intent);
     }

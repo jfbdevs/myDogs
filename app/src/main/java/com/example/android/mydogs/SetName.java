@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class SetName extends AppCompatActivity {
-    public final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
-    public final static String EXTRA_MESSAGE2 = "com.mycompany.myfirstapp.MESSAGE2";
+    private final static String EXTRA_MESSAGE = "com.mycompany.myfirstapp.MESSAGE";
+    private final static String EXTRA_MESSAGE2 = "com.mycompany.myfirstapp.MESSAGE2";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,7 @@ public class SetName extends AppCompatActivity {
         Dog myDog=new Dog(message, age);
 
         TextView dogName = (TextView)findViewById(R.id.name);
+        assert dogName != null;
         dogName.setText(myDog.getName());
 
         TextView dogAge = (TextView)findViewById(R.id.age);
@@ -38,6 +39,7 @@ public class SetName extends AppCompatActivity {
         //int defaultValue = getResources().getInteger(R.string.saved_high_score_default);
         String savedName = prefs.getString("name", "empty");
         TextView dogNameSaved = (TextView)findViewById(R.id.dogNameSaved);
+        assert dogNameSaved != null;
         dogNameSaved.setText(savedName);
 /** Called when the user clicks the Send button */
     }

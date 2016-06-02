@@ -22,11 +22,15 @@ class Dog {
         return this.name;
     }
 
-    public void setName(String newName) {
-        this.name = newName;
-    }
+// --Commented out by Inspection START (02/06/2016 09:40):
+//    public void setName(String newName) {
+//        this.name = newName;
+//    }
+// --Commented out by Inspection STOP (02/06/2016 09:40)
 
-    public void setAge(int newAge) {
-        this.age = newAge;
-    }
+// --Commented out by Inspection START (02/06/2016 09:41):
+//    public void setAge(int newAge) {
+//        this.age = newAge;
+//    }
+// --Commented out by Inspection STOP (02/06/2016 09:41)
 }

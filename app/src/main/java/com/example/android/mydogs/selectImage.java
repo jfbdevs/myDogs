@@ -6,9 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,41 +21,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-
-
+import java.io.InputStream;
 
 public class selectImage extends Activity {
 
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private Button btnSelect;
+    private final int REQUEST_CAMERA = 0;
+    private final int SELECT_FILE = 1;
     private ImageView ivImage;
-    private String userChoosenTask;
+    private String userChosenTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_image);
-        btnSelect = (Button) findViewById(R.id.btnSelectPhoto);
+        Button btnSelect = (Button) findViewById(R.id.btnSelectPhoto);
         btnSelect.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -64,13 +46,13 @@ public class selectImage extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(userChoosenTask.equals("Take Photo"))
+                    if(userChosenTask.equals("Take Photo"))
                         cameraIntent();
-                    else if(userChoosenTask.equals("Choose from Library"))
+                    else if(userChosenTask.equals("Choose from Library"))
                         galleryIntent();
                 } else {
                     //code for deny
@@ -90,12 +72,12 @@ public class selectImage extends Activity {
                 boolean result=Utility.checkPermission(selectImage.this);
 
                 if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
+                    userChosenTask ="Take Photo";
                     if(result)
                         cameraIntent();
 
                 } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
+                    userChosenTask ="Choose from Library";
                     if(result)
                         galleryIntent();
 
@@ -111,7 +93,7 @@ public class selectImage extends Activity {
     {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.setAction(Intent.ACTION_PICK);//
         startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
     }
 
@@ -127,15 +109,20 @@ public class selectImage extends Activity {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == REQUEST_CAMERA)
+
+                    onSelectFromGalleryResult(data);
+
+                }
+            else if (requestCode == REQUEST_CAMERA){
                 onCaptureImageResult(data);
         }
     }
 
+
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        assert thumbnail != null;
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
         File destination = new File(Environment.getExternalStorageDirectory(),
@@ -158,10 +145,10 @@ public class selectImage extends Activity {
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
-
         Bitmap bm=null;
         if (data != null) {
             try {
+
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
             } catch (IOException e) {
                 e.printStackTrace();
