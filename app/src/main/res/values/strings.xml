@@ -26,4 +26,5 @@
         <item>20</item>
         <item> more than 20</item>
     </string-array>
+    <string name="title_activity_image_pick">imagePick</string>
 </resources>

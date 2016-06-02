@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openNew(View view) {
-        Intent intent2 = new Intent(this, Main2Activity.class);
+        Intent intent2 = new Intent(this, selectImage.class);
         startActivity(intent2);
     }
 
