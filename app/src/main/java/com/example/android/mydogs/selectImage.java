@@ -190,7 +190,7 @@ public class selectImage extends Activity {
 
             outStream.flush();
             outStream.close();
-            textView.setText("destination:"+String.valueOf(destination)+"     source:"+String.valueOf(uri));
+            textView.setText("destination:"+String.valueOf(destination)+" source:"+String.valueOf(uri));
            // ImageView imageView = (ImageView) findViewById(R.id.ivImage);
             ivImage.setImageBitmap(scaled);
         } catch (IOException e) {
