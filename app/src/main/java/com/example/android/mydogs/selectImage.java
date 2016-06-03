@@ -26,7 +26,7 @@ import java.io.InputStream;
 public class selectImage extends Activity {
 
     private final int REQUEST_CAMERA = 0;
-    private final int SELECT_FILE = 1;
+    private final int PICK_IMAGE_REQUEST = 1;
     private ImageView ivImage;
     private String userChosenTask;
 
@@ -93,8 +93,8 @@ public class selectImage extends Activity {
     {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);//
-        startActivityForResult(Intent.createChooser(intent, "Select File"),SELECT_FILE);
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select File"),PICK_IMAGE_REQUEST);
     }
 
     private void cameraIntent()
@@ -108,7 +108,7 @@ public class selectImage extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
+            if (requestCode == PICK_IMAGE_REQUEST)
 
                     onSelectFromGalleryResult(data);
 
@@ -143,19 +143,22 @@ public class selectImage extends Activity {
         ivImage.setImageBitmap(thumbnail);
     }
 
-    @SuppressWarnings("deprecation")
+
     private void onSelectFromGalleryResult(Intent data) {
-        Bitmap bm=null;
-        if (data != null) {
-            try {
 
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        Uri uri = data.getData();
+
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            // Log.d(TAG, String.valueOf(bitmap));
+
+            ImageView imageView = (ImageView) findViewById(R.id.ivImage);
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        ivImage.setImageBitmap(bm);
     }
 
-}
+
+    }
+
