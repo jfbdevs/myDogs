@@ -180,14 +180,19 @@ public class selectImage extends Activity {
       //  File source=new File(uri.getPath());
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            //scale
+            int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
             // Log.d(TAG, String.valueOf(bitmap));
+            // save to external directory for retrieve
             outStream = new FileOutputStream(destination);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            scaled.compress(Bitmap.CompressFormat.PNG, 90, outStream);
+
             outStream.flush();
             outStream.close();
             textView.setText("destination:"+String.valueOf(destination)+"     source:"+String.valueOf(uri));
            // ImageView imageView = (ImageView) findViewById(R.id.ivImage);
-            ivImage.setImageBitmap(bitmap);
+            ivImage.setImageBitmap(scaled);
         } catch (IOException e) {
             e.printStackTrace();
         }
