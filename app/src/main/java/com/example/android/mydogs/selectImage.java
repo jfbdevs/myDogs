@@ -12,16 +12,23 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 public class selectImage extends Activity {
 
@@ -110,9 +117,13 @@ public class selectImage extends Activity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PICK_IMAGE_REQUEST)
 
+                try {
                     onSelectFromGalleryResult(data);
-
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+
+        }
             else if (requestCode == REQUEST_CAMERA){
                 onCaptureImageResult(data);
         }
@@ -125,7 +136,13 @@ public class selectImage extends Activity {
         assert thumbnail != null;
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
-        File destination = new File(Environment.getExternalStorageDirectory(),
+        String folder_main = "myDogs2";
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+
+        File destination = new File(Environment.getExternalStorageDirectory()+"/myDogs2/",
                 System.currentTimeMillis() + ".jpg");
 
         FileOutputStream fo;
@@ -144,21 +161,43 @@ public class selectImage extends Activity {
     }
 
 
-    private void onSelectFromGalleryResult(Intent data) {
-
+    private void onSelectFromGalleryResult(Intent data) throws IOException {
+        OutputStream outStream = null;
         Uri uri = data.getData();
+        String folder_main = "myDogs2";
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
 
+        final String TAG = "MyActivity";
+        Log.d(TAG, String.valueOf(f));
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        File destination = new File(Environment.getExternalStorageDirectory()+"/myDogs2/",
+                System.currentTimeMillis() + ".jpg");
+        Log.d(TAG, "destination: "+String.valueOf(destination));
+        TextView textView = (TextView) findViewById(R.id.textView);
+
+      //  File source=new File(uri.getPath());
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
             // Log.d(TAG, String.valueOf(bitmap));
-
-            ImageView imageView = (ImageView) findViewById(R.id.ivImage);
-            imageView.setImageBitmap(bitmap);
+            outStream = new FileOutputStream(destination);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+            textView.setText("destination:"+String.valueOf(destination)+"     source:"+String.valueOf(uri));
+           // ImageView imageView = (ImageView) findViewById(R.id.ivImage);
+            ivImage.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
 
 
-    }
+
+
+}
 

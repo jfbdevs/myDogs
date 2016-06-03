@@ -3,6 +3,9 @@ package com.example.android.mydogs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +24,16 @@ public class MainActivity extends AppCompatActivity {
                 "com.example.MyDogs", Context.MODE_PRIVATE);
         String savedName = prefs.getString("name", "empty");
         Button openNew = (Button)findViewById(R.id.openNew);
+
+
+
+        String photoPath = Environment.getExternalStorageDirectory()+"/abc.jpg";
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        Bitmap bitmap = BitmapFactory.decodeFile(photoPath, options);
+
 
         if(savedName.equals("empty")){
             assert openNew != null;

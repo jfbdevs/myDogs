@@ -29,7 +29,9 @@
             android:id="@+id/ivImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_launcher"
+            android:cropToPadding="true"
+            android:nestedScrollingEnabled="true" />
     </LinearLayout>
 
     <TextView
