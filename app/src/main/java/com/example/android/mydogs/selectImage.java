@@ -2,8 +2,10 @@ package com.example.android.mydogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -187,6 +189,18 @@ public class selectImage extends Activity {
             textView.setText("destination:"+String.valueOf(destination)+" source:"+String.valueOf(uri));
            // ImageView imageView = (ImageView) findViewById(R.id.ivImage);
             ivImage.setImageBitmap(scaled);
+
+            // save the image path in the preferences file
+            SharedPreferences prefs = this.getSharedPreferences(
+                    "com.example.MyDogs", Context.MODE_PRIVATE);
+
+            // SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("image",String.valueOf(destination));
+            editor.apply();
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
